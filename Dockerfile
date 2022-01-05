@@ -8,4 +8,4 @@ COPY ./jvm.options config/jvm.options
 RUN pip3 install pipreqs
 RUN pipreqs .
 RUN pip3 install 'elasticsearch<7.14.0'
-CMD ["python", "./deduplication.py"]
+#CMD ["python", "./deduplication.py"]
