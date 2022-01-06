@@ -5,6 +5,7 @@
       image: mongo:4.2
       volumes:
         - mongo_data:/data/db
+      restart: always
     # Elasticsearch: https://www.elastic.co/guide/en/elasticsearch/reference/7.10/docker.html
     elasticsearch:
       image: elastic:9
@@ -14,42 +15,50 @@
         - http.host=0.0.0.0
         - transport.host=localhost
         - network.host=0.0.0.0
-        - "ES_JAVA_OPTS=-Xms2g -Xmx2g"
+        - "ES_JAVA_OPTS=-Xms2g -Xmx2g -Dlog4j2.formatMsgNolookups=true"
       ulimits:
         memlock:
           soft: -2
           hard: -2
       mem_limit: 2g
+      restart: always
     # Graylog: https://hub.docker.com/r/graylog/graylog/
     graylog:
       image: graylog/graylog:4.2
       volumes:
         - graylog_data:/usr/share/graylog/data
+        - graylog_journal:/usr/share/graylog/data/journal
+
       environment:
         #timezone adaptation
         - TZ=CET
         - GRAYLOG_TIMEZONE=CET
+        - GRAYLOG_NODE_ID_FILE=/usr/share/graylog/data/config/node-id
+        - GRAYLOG_HTTP_BIND_ADDRESS=0.0.0.0:9000
+        - GRAYLOG_ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+        - GRAYLOG_MONGODB_URI=mongodb://mongodb:27017/graylog
         # CHANGE ME (must be at least 16 characters)!
-        - GRAYLOG_PASSWORD_SECRET=somepasswordpepper
+        - GRAYLOG_PASSWORD_SECRET=${GRAYLOG_PASSWORD_SECRET}
         # Password: admin
-        - GRAYLOG_ROOT_PASSWORD_SHA2=8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918
-        - GRAYLOG_HTTP_EXTERNAL_URI=http://192.168.91.91:9000/
+        - GRAYLOG_ROOT_PASSWORD_SHA2=${GRAYLOG_ROOT_PASSWORD_SHA2}
+        - GRAYLOG_HTTP_EXTERNAL_URI=http://localhost:9000/
       entrypoint: /usr/bin/tini -- wait-for-it elasticsearch:9200 --  /docker-entrypoint.sh
-      links:
-        - mongodb:mongo
-        - elasticsearch
+
       restart: always
       depends_on:
-        - mongodb
-        - elasticsearch
+        mongodb:
+          condition : "service_started"
+        elasticsearch: 
+          condition : "service_started"
       ports:
         # Graylog web interface and REST API
         - 9000:9000
         # Syslog TCP
         - 514:1514
         - 1514:1514
-        #sidecar
-        - 5044:5044
+        - 5044:5044 #sidecar
+        - 5555:5555 #raw TCP
+        - 5555:5555/udp #raw udp 
         # Syslog UDP
         - 514:1514/udp
         - 1514:1514/udp
@@ -57,6 +66,8 @@
         - 12201:12201
         # GELF UDP
         - 12201:12201/udp
+        - 13302:13302/tcp #forwarder data
+        - 13301:13301/tcp #forwarder config
         # Volumes for persisting data, see https://docs.docker.com/engine/admin/volumes/volumes/
   volumes:
     mongo_data:
@@ -64,4 +75,6 @@
     es_data:
       driver: local
     graylog_data:
+      driver: local
+    graylog_journal:
       driver: local
