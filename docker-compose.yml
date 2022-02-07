@@ -13,6 +13,7 @@
         - es_data:/usr/share/elasticsearch/data
         - elastic-backup:/usr/share/elasticsearch/backup
         - ./elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+        - ./jvm.options:/usr/share/elasticsearch/config/jvm.options
       environment:
         - http.host=0.0.0.0
         - transport.host=localhost
