@@ -16,6 +16,7 @@
         - transport.host=localhost
         - network.host=0.0.0.0
         - "ES_JAVA_OPTS=-Xms2g -Xmx2g -Dlog4j2.formatMsgNolookups=true"
+        - elastic-backup:/usr/share/elasticsearch/backup
       ulimits:
         memlock:
           soft: -2
