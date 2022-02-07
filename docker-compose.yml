@@ -8,15 +8,16 @@
       restart: always
     # Elasticsearch: https://www.elastic.co/guide/en/elasticsearch/reference/7.10/docker.html
     elasticsearch:
-      image: elastic:9
+      image: elastic:10
       volumes:
         - es_data:/usr/share/elasticsearch/data
+        - elastic-backup:/usr/share/elasticsearch/backup
+        - ./elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
       environment:
         - http.host=0.0.0.0
         - transport.host=localhost
         - network.host=0.0.0.0
         - "ES_JAVA_OPTS=-Xms2g -Xmx2g -Dlog4j2.formatMsgNolookups=true"
-        - elastic-backup:/usr/share/elasticsearch/backup
       ulimits:
         memlock:
           soft: -2
@@ -78,5 +79,7 @@
     graylog_data:
       driver: local
     graylog_journal:
+      driver: local
+    elastic-backup:
       driver: local
 
