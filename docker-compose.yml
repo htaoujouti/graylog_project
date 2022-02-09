@@ -11,13 +11,8 @@
       image: elastic:10
       volumes:
         - es_data:/usr/share/elasticsearch/data
-<<<<<<< HEAD
         - elastic-backup-remote:/usr/share/elasticsearch/backup
         - ./elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
-=======
-        - elastic-backup:/usr/share/elasticsearch/backup
-        - ./elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
->>>>>>> 8a298207eeaa4cbdba449a86fa63648d38460891
         - ./jvm.options:/usr/share/elasticsearch/config/jvm.options
       environment:
         - http.host=0.0.0.0
@@ -86,15 +81,12 @@
       driver: local
     graylog_journal:
       driver: local
-<<<<<<< HEAD
     elastic-backup-remote:
       driver_opts:
         type: cifs
         o: addr=192.168.0.185,username=${username},password=${password},file_mode=0777,dir_mode=0777
         device: "//192.168.0.185/esbackup/backup/"
   
-=======
-    elastic-backup:
-      driver: local
 
->>>>>>> 8a298207eeaa4cbdba449a86fa63648d38460891
+
+
