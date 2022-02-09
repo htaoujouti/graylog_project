@@ -1,3 +1,11 @@
+https://www.youtube.com/watch?v=CX7wrB56deI&t
+https://www.elastic.co/guide/en/elasticsearch/reference/7.10/getting-started-snapshot-lifecycle-management.html
+https://www.elastic.co/guide/en/elasticsearch/reference/current/getting-started-snapshot-lifecycle-management.html
+https://www.elastic.co/guide/en/elasticsearch/reference/current/snapshots-take-snapshot.html#automate-snapshots-slm
+https://www.elastic.co/guide/en/elasticsearch/reference/6.8/indices-open-close.html
+https://www.elastic.co/guide/en/elasticsearch/reference/current/snapshots-restore-snapshot.html
+https://www.elastic.co/guide/en/elasticsearch/reference/6.8/indices-open-close.html
+
 curl -XPUT -H "content-type:application/json" 'http://localhost:9200/_snapshot/esbackup' -d '{"type":"fs","settings":{"location":"/usr/share/elasticsearch/backup", "compress":true}}'
 curl -XGET 'http://localhost:9200/_snapshot/_all?pretty'
 curl -XGET 'http://localhost:9200/_cat/indices'
