@@ -18,6 +18,7 @@ curl -XPOST 'http://localhost:9200/_snapshot/esbackup/first-snapshot/_restore?wa
 curl -XPOST 'http://localhost:9200/_all/_open'I
 curl -XGET 'http://localhost:9200/_snapshot/_all?pretty'
 curl -X POST "localhost:9200/_snapshot/esbackup-test/my_snapshot/_restore?wait_for_completion=true&pretty" -H 'Content-Type: application/json' -d' {"indices": "graylog_0", "ignore_unavailable": true, "include_global_state": false, "rename_pattern": "graylog_(.+)", "rename_replacement": "restored_graylog_$1", "include_aliases": false} '
+
 rpcinfo 192.168.0.185 |egrep "service|nfs"
 sudo mount -t cifs -o user=admin,password=password,uid=root,gid=root //192.168.0.185/esbackup/backup
 
