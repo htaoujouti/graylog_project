@@ -1,0 +1,21 @@
+curl -XPUT -H "content-type:application/json" 'http://localhost:9200/_snapshot/esbackup' -d '{"type":"fs","settings":{"location":"/usr/share/elasticsearch/backup", "compress":true}}'
+curl -XGET 'http://localhost:9200/_snapshot/_all?pretty'
+curl -XGET 'http://localhost:9200/_cat/indices'
+curl -XPUT 'http://localhost:9200/_snapshot/esbackup/first-snapshot?wait_for_completion=true'
+curl -XGET 'http://localhost:9200/_snapshot/esbackup/_all?pretty'
+curl -XDELETE 'http://localhost:9200/_all'
+curl -XGET 'http://localhost:9200/_cat/indices'
+curl -XPOST 'http://localhost:9200/_all/_close'
+curl -XPOST 'http://localhost:9200/_snapshot/esbackup/first-snapshot/_restore?wait for completion=true'
+curl -XPOST 'http://localhost:9200/_all/_open'I
+
+curl -XGET 'http://localhost:9200/_snapshot/_all?pretty'
+
+
+
+volumes:
+  foldermix:
+    driver_opts:
+      type: cifs
+      o: username={smbuser},password={smbpass},uid={UID for mount},gid={gid for mount},vers=3.0
+      device: //Share1/FolderMix
