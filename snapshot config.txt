@@ -1,35 +1,21 @@
 curl -XPUT -H "content-type:application/json" 'http://localhost:9200/_snapshot/esbackup' -d '{"type":"fs","settings":{"location":"/usr/share/elasticsearch/backup", "compress":true}}'
-curl -XGET http://localhost:9200/_snapshot/_all?pretty'
+curl -XGET 'http://localhost:9200/_snapshot/_all?pretty'
 curl -XGET 'http://localhost:9200/_cat/indices'
-curl -XGET 'http://localhost:9200/_snapshot/esbackup/_all?pretty'
-
 curl -XPUT 'http://localhost:9200/_snapshot/esbackup/first-snapshot?wait_for_completion=true'
-
-
+curl -XGET 'http://localhost:9200/_snapshot/esbackup/_all?pretty'
+curl -XDELETE 'http://localhost:9200/_all'
+curl -XGET 'http://localhost:9200/_cat/indices'
+curl -XPOST 'http://localhost:9200/_all/_close'
 curl -XPOST 'http://localhost:9200/_snapshot/esbackup/first-snapshot/_restore?wait for completion=true'
-                                                            I
-
-{"error":{
-"root_cause":
-[{"type":"snapshot_exception",
-"reason":"[esbackup:first-snapshot/JKgYEZriRVee-SSPK7oFww] no longer master"}],
-"type":"snapshot_exception",
-"reason":"[esbackup:first-snapshot/JKgYEZriRVee-SSPK7oFww] no longer master"},
-"status":500}
-
-{"error":{
-"root_cause":
-[{"type":"master_not_discovered_exception","reason":null}],
-"type":"master_not_discovered_exception","reason":null},
-"status":503}
-
+curl -XPOST 'http://localhost:9200/_all/_open'I
 
 curl -XGET 'http://localhost:9200/_snapshot/_all?pretty'
 
 
-{"error":{"root_cause":
-[{"type":"illegal_argument_exception","reason":"invalid version format: FOR COMPLETION=TRUE HTTP/1.1"}],
 
-"status":400}
-
-type:illegal_argument_exception,reason:invalid version format: FOR COMPLETION=TRUE HTTP/1.1
+volumes:
+  foldermix:
+    driver_opts:
+      type: cifs
+      o: username={smbuser},password={smbpass},uid={UID for mount},gid={gid for mount},vers=3.0
+      device: //Share1/FolderMix
