@@ -15,16 +15,29 @@
         - ./elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
         - ./jvm.options:/usr/share/elasticsearch/config/jvm.options
       environment:
+        - node.name=es01
         - http.host=0.0.0.0
         - transport.host=localhost
         - network.host=0.0.0.0
         - "ES_JAVA_OPTS=-Xms2g -Xmx2g -Dlog4j2.formatMsgNolookups=true"
+      ports:
+      - 9200:9200
       ulimits:
         memlock:
           soft: -2
           hard: -2
       mem_limit: 2g
       restart: always
+      # kibana
+    kibana:
+      image: docker.elastic.co/kibana/kibana:7.10.2
+      ports:
+        - 5601:5601
+      environment:
+        ELASTICSEARCH_URL: http://es01:9200
+        ELASTICSEARCH_HOSTS: '["http://es01:9200"]'
+      volumes:
+        - ./kibana.yml:/usr/share/kibana/config/kibana.yml
     # Graylog: https://hub.docker.com/r/graylog/graylog/
     graylog:
       image: graylog/graylog:4.2
