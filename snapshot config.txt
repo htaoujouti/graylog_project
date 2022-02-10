@@ -53,3 +53,24 @@ curl -X PUT "localhost:9200/_slm/policy/nightly-snapshots?pretty" -H 'Content-Ty
 
 curl -X POST "localhost:9200/_slm/policy/nightly-snapshots/_execute?pretty"
 curl -X GET "localhost:9200/_slm/policy/nightly-snapshots?human&pretty"
+
+curl -X PUT "localhost:9200/_slm/policy/daily-snapshots?pretty" -H 'Content-Type: application/json' -d'
+{
+  "schedule": "0 30 1 * * ?", 
+  "name": "<daily-snap-{now/d}>", 
+  "repository": "esbackup", 
+  "config": { 
+    "indices": ["data-*", "important"], 
+    "ignore_unavailable": false,
+    "include_global_state": false
+  },
+  "retention": { 
+    "expire_after": "30d", 
+    "min_count": 5, 
+    "max_count": 50 
+  }
+}
+'
+curl -X GET "localhost:9200/_xpack?categories=features&pretty"
+
+curl -X GET "localhost:9200/_slm/start"
