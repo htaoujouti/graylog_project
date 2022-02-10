@@ -29,16 +29,13 @@ volumes:
       o: username={smbuser},password={smbpass},uid={UID for mount},gid={gid for mount},vers=3.0
       device: //Share1/FolderMix
 
-curl -X POST "localhost:9200/_snapshot/my_repository/snapshot_2/_restore?wait_for_completion=true&pretty" -H 'Content-Type: application/json' -d'
-{
+curl -X POST "localhost:9200/_snapshot/my_repository/snapshot_2/_restore?wait_for_completion=true&pretty" -H 'Content-Type: application/json' -d'{
   "indices": "index_1,index_2",
   "ignore_unavailable": true,
   "include_global_state": false,
   "rename_pattern": "index_(.+)",
   "rename_replacement": "restored_index_$1",
-  "include_aliases": false
-}
-'
+  "include_aliases": false}'
 
 curl -X GET "localhost:9200/_snapshot/_all?pretty"
 curl -X DELETE "localhost:9200/_snapshot/my_backup/snap*?pretty"
