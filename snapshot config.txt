@@ -41,4 +41,5 @@ curl -X POST "localhost:9200/_snapshot/my_repository/snapshot_2/_restore?wait_fo
 '
 
 curl -X GET "localhost:9200/_snapshot/_all?pretty"
-
+curl -X DELETE "localhost:9200/_snapshot/my_backup/snap*?pretty"
+curl -X DELETE "localhost:9200/_snapshot/my_repository?pretty"
