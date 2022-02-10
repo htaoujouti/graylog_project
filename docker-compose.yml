@@ -28,7 +28,7 @@
           hard: -2
       mem_limit: 2g
       restart: always
-      # kibana
+      # kibana https://www.elastic.co/guide/en/kibana/7.10/docker.html
     kibana:
       image: docker.elastic.co/kibana/kibana:7.10.2
       ports:
