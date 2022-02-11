@@ -81,7 +81,7 @@ curl -X GET "localhost:9200/_slm/start"
 
 
 
-echo -e "cluster.name: \"docker-cluster\"\nnetwork.host: 0.0.0.0\ncluster.routing.allocation.disk.threshold_enabled: true\ncluster.routing.allocation.disk.watermark.flood_stage: 1gb\ncluster.routing.allocation.disk.watermark.low: 2gb\ncluster.routing.allocation.disk.watermark.high: 1.5gb\nindex.codec: best_compression\npath.repo: ["/usr/share/elasticsearch/backup"]"
+echo -e "cluster.name: \"docker-cluster\"\nnetwork.host: 0.0.0.0\ncluster.routing.allocation.disk.threshold_enabled: true\ncluster.routing.allocation.disk.watermark.flood_stage: 1gb\ncluster.routing.allocation.disk.watermark.low: 2gb\ncluster.routing.allocation.disk.watermark.high: 1.5gb\nindex.codec: best_compression\npath.repo: [\"/usr/share/elasticsearch/backup\"]"
 
 
 curl -X GET "localhost:9200/_slm/policy/nightly-snapshots?human&pretty"
