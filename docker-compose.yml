@@ -8,7 +8,8 @@
       restart: always
     # Elasticsearch: https://www.elastic.co/guide/en/elasticsearch/reference/7.10/docker.html
     elasticsearch:
-      image: elastic:10
+    #  container_name: es01    
+      image: docker.elastic.co/elasticsearch/elasticsearch:7.10.2
       volumes:
         - es_data:/usr/share/elasticsearch/data
         - elastic-backup-remote:/usr/share/elasticsearch/backup
@@ -29,19 +30,20 @@
       mem_limit: 2g
       restart: always
       # kibana https://www.elastic.co/guide/en/kibana/7.10/docker.html
-    kibana:
-      image: docker.elastic.co/kibana/kibana:7.10.2
-      ports:
-        - 5601:5601
-      environment:
-        ELASTICSEARCH_URL: http://es01:9200
-        ELASTICSEARCH_HOSTS: '["http://es01:9200"]'
-      volumes:
-        - ./kibana.yml:/usr/share/kibana/config/kibana.yml
-      restart: always
-      depends_on:
-        elasticsearch: 
-          condition : "service_started"
+#    kibana:
+ #     container_name: kb01
+  #    image: docker.elastic.co/kibana/kibana:7.10.2
+   #   ports:
+    #    - 5601:5601
+     # environment:
+      #  ELASTICSEARCH_URL: http://es01:9200
+       # ELASTICSEARCH_HOSTS: http://es01:9200
+     # volumes:
+      #  - ./kibana.yml:/usr/share/kibana/config/kibana.yml
+     # restart: always
+      #depends_on:
+       # elasticsearch: 
+        #  condition : "service_started"
     # Graylog: https://hub.docker.com/r/graylog/graylog/
     graylog:
       image: graylog/graylog:4.2
