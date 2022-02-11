@@ -7,6 +7,8 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/snapshots-restor
 https://www.elastic.co/guide/en/elasticsearch/reference/6.8/indices-open-close.html
 https://www.elastic.co/guide/en/elasticsearch/reference/current/snapshots-register-repository.html
 https://www.elastic.co/guide/en/elasticsearch/reference/current/security-privileges.html#privileges-list-cluster
+https://github.com/Zappelphilipp/docker-graylog-kibana-nginx-stack/blob/master/docker-compose.yml
+https://stackoverflow.com/questions/57998092/docker-compose-error-bootstrap-checks-failed-max-virtual-memory-areas-vm-ma?rq=1#:~:text=sudo%20sysctl%20%2Dw%20vm.max_map_count%3D262144
 
 curl -XPUT -H "content-type:application/json" 'http://localhost:9200/_snapshot/esbackup' -d '{"type":"fs","settings":{"location":"/usr/share/elasticsearch/backup", "compress":true}}'
 curl -XGET 'http://localhost:9200/_snapshot/_all?pretty'
