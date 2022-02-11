@@ -15,7 +15,7 @@ curl -XDELETE 'http://localhost:9200/_all'
 curl -XGET 'http://localhost:9200/_cat/indices'
 curl -XPOST 'http://localhost:9200/_all/_close'
 curl -XPOST 'http://localhost:9200/_snapshot/esbackup/first-snapshot/_restore?wait for completion=true'
-curl -XPOST 'http://localhost:9200/_all/_open'I
+curl -XPOST 'http://localhost:9200/_all/_open'
 curl -XGET 'http://localhost:9200/_snapshot/_all?pretty'
 curl -X POST "localhost:9200/_snapshot/esbackup-test/my_snapshot/_restore?wait_for_completion=true&pretty" -H 'Content-Type: application/json' -d' {"indices": "graylog_0", "ignore_unavailable": true, "include_global_state": false, "rename_pattern": "graylog_(.+)", "rename_replacement": "restored_graylog_$1", "include_aliases": false} '
 
@@ -44,7 +44,7 @@ curl -X DELETE "localhost:9200/_snapshot/my_repository?pretty"
 curl -X PUT "localhost:9200/_slm/policy/nightly-snapshots?pretty" -H 'Content-Type: application/json' -d'{
   "schedule": "0 30 1 * * ?", 
   "name": "<nightly-snap-{now/d}>", 
-  "repository": "my_repository", 
+  "repository": "es-backup", 
   "config": {"indices": ["*"]},
   "retention": { 
     "expire_after": "30d", 
@@ -74,3 +74,10 @@ curl -X PUT "localhost:9200/_slm/policy/daily-snapshots?pretty" -H 'Content-Type
 curl -X GET "localhost:9200/_xpack?categories=features&pretty"
 
 curl -X GET "localhost:9200/_slm/start"
+
+
+
+echo -e "cluster.name: \"docker-cluster\"\nnetwork.host: 0.0.0.0\ncluster.routing.allocation.disk.threshold_enabled: true\ncluster.routing.allocation.disk.watermark.flood_stage: 1gb\ncluster.routing.allocation.disk.watermark.low: 2gb\ncluster.routing.allocation.disk.watermark.high: 1.5gb\nindex.codec: best_compression\npath.repo: ["/usr/share/elasticsearch/backup"]"
+
+
+curl -X GET "localhost:9200/_slm/policy/nightly-snapshots?human&pretty"
