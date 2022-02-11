@@ -5,6 +5,8 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/snapshots-take-s
 https://www.elastic.co/guide/en/elasticsearch/reference/6.8/indices-open-close.html
 https://www.elastic.co/guide/en/elasticsearch/reference/current/snapshots-restore-snapshot.html
 https://www.elastic.co/guide/en/elasticsearch/reference/6.8/indices-open-close.html
+https://www.elastic.co/guide/en/elasticsearch/reference/current/snapshots-register-repository.html
+https://www.elastic.co/guide/en/elasticsearch/reference/current/security-privileges.html#privileges-list-cluster
 
 curl -XPUT -H "content-type:application/json" 'http://localhost:9200/_snapshot/esbackup' -d '{"type":"fs","settings":{"location":"/usr/share/elasticsearch/backup", "compress":true}}'
 curl -XGET 'http://localhost:9200/_snapshot/_all?pretty'
