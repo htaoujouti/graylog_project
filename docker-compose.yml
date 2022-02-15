@@ -13,7 +13,7 @@
       image: docker.elastic.co/elasticsearch/elasticsearch:7.10.2
       volumes:
         - es_data:/usr/share/elasticsearch/data
-        - elastic-backup-remote:/usr/share/elasticsearch/backup
+      #  - elastic-backup-remote:/usr/share/elasticsearch/backup
         - ./elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
         - ./jvm.options:/usr/share/elasticsearch/config/jvm.options
       environment:
@@ -21,14 +21,14 @@
         - http.host=0.0.0.0
         - transport.host=localhost
         - network.host=0.0.0.0
-        - "ES_JAVA_OPTS=-Xms2g -Xmx2g -Dlog4j2.formatMsgNolookups=true"
+        - "ES_JAVA_OPTS=-Xms4g -Xmx4g -Dlog4j2.formatMsgNolookups=true"
       ports:
       - 9200:9200
       ulimits:
         memlock:
-          soft: -2
-          hard: -2
-      mem_limit: 2g
+          soft: -4
+          hard: -4
+      mem_limit: 4g
       restart: always
     # Graylog: https://hub.docker.com/r/graylog/graylog/
     graylog:
@@ -63,13 +63,13 @@
         # Graylog web interface and REST API
         - 9000:9000
         # Syslog TCP
-        - 514:1514
+        - 514:514
         - 1514:1514
         - 5044:5044 #sidecar
         - 5555:5555 #raw TCP
         - 5555:5555/udp #raw udp 
         # Syslog UDP
-        - 514:1514/udp
+        - 514:514/udp
         - 1514:1514/udp
         # GELF TCP
         - 12201:12201
@@ -102,12 +102,8 @@
       driver: local
     graylog_journal:
       driver: local
-    elastic-backup-remote:
-      driver_opts:
-        type: cifs
-        o: addr=192.168.0.185,username=${username},password=${password},file_mode=0777,dir_mode=0777
-        device: "//192.168.0.185/esbackup/backup/"
-  
-
-
-
+ #   elastic-backup-remote:
+  #    driver_opts:
+   #     type: cifs
+    #    o: addr=192.168.0.185,username=${username},password=${password},file_mode=0777,dir_mode=0777
+     #   device: "//192.168.0.185/esbackup/backup/"
