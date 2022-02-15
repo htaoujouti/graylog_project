@@ -5,6 +5,7 @@ services:
   mongodb1:
     image: "mongo:4.2"
     hostname: "mongodb1"
+    container_name: mongodb1
     command: ["mongod", "--bind_ip_all", "--replSet", "rs0"]
     volumes:
       - "mongodb-data-01:/data/db"
@@ -15,6 +16,7 @@ services:
   mongodb2:
     image: "mongo:4.2"
     hostname: "mongodb2"
+    container_name: mongodb2
     command: ["mongod", "--bind_ip_all", "--replSet", "rs0"]
     volumes:
       - "mongodb-data-02:/data/db"
@@ -23,6 +25,7 @@ services:
   mongodb3:
     image: "mongo:4.2"
     hostname: "mongodb3"
+    container_name: mongodb3
     command: ["mongod", "--bind_ip_all", "--replSet", "rs0"]
     volumes:
       - "mongodb-data-03:/data/db"
@@ -31,6 +34,7 @@ services:
   elasticsearch1:
     image: "docker.elastic.co/elasticsearch/elasticsearch-oss:7.10.2"
     hostname: "elasticsearch1"
+    container_name: elasticsearch1
     environment:
       node.name: "elasticsearch1"
       cluster.name: "es-docker-cluster"
