@@ -51,13 +51,13 @@ curl -X PUT "localhost:9200/_slm/policy/nightly-snapshots?pretty" -H 'Content-Ty
   "repository": "es-backup", 
   "config": {"indices": ["*"]},
   "retention": { 
-    "expire_after": "30d", 
-    "min_count": 2, 
-    "max_count": 5 }}'
+    "expire_after": "90d", 
+    "min_count": 1, 
+    "max_count": 1 }}'
 
 curl -X POST "localhost:9200/_slm/policy/nightly-snapshots/_execute?pretty"
 curl -X GET "localhost:9200/_slm/policy/nightly-snapshots?human&pretty"
-
+curl -X DELETE "localhost:9200/_slm/policy/daily-snapshots?pretty"  
 curl -X PUT "localhost:9200/_slm/policy/daily-snapshots?pretty" -H 'Content-Type: application/json' -d'
 {
   "schedule": "0 30 1 * * ?", 
@@ -85,3 +85,9 @@ echo -e "cluster.name: \"docker-cluster\"\nnetwork.host: 0.0.0.0\ncluster.routin
 
 
 curl -X GET "localhost:9200/_slm/policy/nightly-snapshots?human&pretty"
+
+curl -X PUT "localhost:9200/_snapshot/nightly-snapshots" -H 'Content-Type: application/json' -d'{
+    "type": "fs",
+    "settings": {
+    "location": "/usr/share/elasticsearch/backup"
+    }}'
