@@ -102,3 +102,4 @@ curl -X PUT "localhost:9200/_cluster/settings?pretty" -H 'Content-Type: applicat
   }
 }
 '
+curl -X GET "localhost:9200/_snapshot/esbackup/_current?pretty"
