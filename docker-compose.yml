@@ -21,7 +21,7 @@
         - http.host=0.0.0.0
         - transport.host=localhost
         - network.host=0.0.0.0
-        - "ES_JAVA_OPTS=-Xms12g -Xmx12g -Dlog4j2.formatMsgNolookups=true"
+        - "ES_JAVA_OPTS=-Xms10g -Xmx10g -Dlog4j2.formatMsgNolookups=true"
       ports:
       - 9200:9200
       ulimits:
