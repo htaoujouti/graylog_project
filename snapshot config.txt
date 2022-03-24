@@ -48,12 +48,12 @@ curl -X DELETE "localhost:9200/_snapshot/my_repository?pretty"
 curl -X PUT "localhost:9200/_slm/policy/nightly-snapshots?pretty" -H 'Content-Type: application/json' -d'{
   "schedule": "0 30 1 * * ?", 
   "name": "<nightly-snap-{now/d}>", 
-  "repository": "es-backup", 
+  "repository": "esbackup", 
   "config": {"indices": ["*"]},
   "retention": { 
-    "expire_after": "90d", 
+    "expire_after": "95d", 
     "min_count": 1, 
-    "max_count": 5 }}'
+    "max_count": 90 }}'
 
 curl -X POST "localhost:9200/_slm/policy/nightly-snapshots/_execute?pretty"
 curl -X GET "localhost:9200/_slm/policy/nightly-snapshots?human&pretty"
