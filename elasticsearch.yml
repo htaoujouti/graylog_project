@@ -8,5 +8,5 @@ cluster.routing.allocation.disk.watermark.high: 10gb
 index.codec: best_compression
 cluster.initial_master_nodes: ["127.0.0.1"] 
 path.repo: ["/usr/share/elasticsearch/backup"]
-search.allow_expensive_queries: false
+search.allow_expensive_queries: true
 bootstrap.memory_lock: true

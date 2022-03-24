@@ -80,20 +80,21 @@
         - 13301:13301/tcp #forwarder config
         # Volumes for persisting data, see https://docs.docker.com/engine/admin/volumes/volumes/
           # kibana https://www.elastic.co/guide/en/kibana/7.10/docker.html
-    #kibana:
-     # container_name: kibana
-      #image: docker.elastic.co/kibana/kibana:7.10.2
-      #ports:
-       # - 5601:5601
-      #environment:
-       # ELASTICSEARCH_URL: http://es01:9200
-        #ELASTICSEARCH_HOSTS: http://es01:9200
-      #volumes:
-       # - ./kibana.yml:/usr/share/kibana/config/kibana.yml
-      #restart: always
-      #depends_on:
-       # elasticsearch: 
-        #  condition : "service_started"
+    kibana:
+      container_name: kibana
+      image: docker.elastic.co/kibana/kibana:7.10.2
+      ports:
+        - 5601:5601
+      environment:
+        - server.host="0.0.0.0"
+        - elasticsearch.hosts=http://elasticsearch:9200
+        - monitoring.ui.container.elasticsearch.enabled=true
+      volumes:
+        - ./kibana.yml:/usr/share/kibana/config/kibana.yml
+      restart: always
+      depends_on:
+        elasticsearch: 
+          condition : "service_started"
   volumes:
     mongo_data:
       driver: local
