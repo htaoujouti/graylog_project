@@ -1,3 +1,7 @@
+This is the Graylog project;
+I managed to install Graylog using docker-compose, I configure it. 
+I create a snapshot on store index on remote shared storage as a backup repository for snapshots, then I configured a policy for snapshots to be created automatically with a retention policy 
+After that, I integrated Kibana to help manage indices and snapshots easily.
 
 # graylog_project
 to generate password
