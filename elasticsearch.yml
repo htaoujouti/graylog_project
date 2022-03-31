@@ -10,3 +10,4 @@ cluster.initial_master_nodes: ["127.0.0.1"]
 path.repo: ["/usr/share/elasticsearch/backup"]
 search.allow_expensive_queries: true
 bootstrap.memory_lock: true
+xpack.security.enabled: true

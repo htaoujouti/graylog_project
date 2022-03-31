@@ -22,6 +22,7 @@
         - transport.host=localhost
         - network.host=0.0.0.0
         - "ES_JAVA_OPTS=-Xms10g -Xmx10g -Dlog4j2.formatMsgNolookups=true"
+        - "xpack.security.enabled=true"
       ports:
       - 9200:9200
       ulimits:
@@ -44,7 +45,7 @@
         - GRAYLOG_TIMEZONE=CET
         - GRAYLOG_NODE_ID_FILE=/usr/share/graylog/data/config/node-id
         - GRAYLOG_HTTP_BIND_ADDRESS=0.0.0.0:9000
-        - GRAYLOG_ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+        - GRAYLOG_ELASTICSEARCH_HOSTS=http://${elastic_user}:${kibana_pass}@elasticsearch:9200
         - GRAYLOG_MONGODB_URI=mongodb://mongodb:27017/graylog
         # CHANGE ME (must be at least 16 characters)!
         - GRAYLOG_PASSWORD_SECRET=${GRAYLOG_PASSWORD_SECRET}
